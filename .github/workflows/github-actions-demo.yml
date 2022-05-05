@@ -5,6 +5,7 @@ on:
        master
 env:
   REGION_ID: cn-north-4                  # set this to your preferred huaweicloud region, e.g. cn-north-4
+  PROJECT_ID: 
   ACCESS_KEY_ID: ${{ secrets.ACCESSKEY }}             # set this to your huaweicloud access-key-id
   ACCESS_KEY_SECRET: ${{ secrets.SECRETACCESSKEY }}               # set this to your huaweicloud access-key-secret
   SWR_ORGANIZATION:  hcloudcli   # SWR 组织名

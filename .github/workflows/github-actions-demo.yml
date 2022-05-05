@@ -2,7 +2,7 @@ name: Deploy CCI Actions Demo
 on:
   push:
     branches:
-       master1
+       master
 env:
   REGION_ID: cn-north-4                  # set this to your preferred huaweicloud region, e.g. cn-north-4
   PROJECT_ID: 0dd8cb413000906a2fcdc019b5a84546   # 项目ID，可以在华为云我的凭证获取
@@ -54,4 +54,5 @@ jobs:
           region: ${{ env.REGION_ID }}
           namespace: action-namespace
           deployment: action-deployment
+          manifest: './deployment.yaml' 
           image: ${{ steps.build-image.outputs.image }}

@@ -45,7 +45,7 @@ jobs:
         uses: Azure/setup-kubectl@v2.1
 
       - name: deploy to cci
-        uses: huaweicloud/deploy-cci-action@v1.0.0
+        uses: huaweicloud/deploy-cci-action@v1.0.1
         id: deploy-to-cci
         with:
           access_key: ${{ secrets.ACCESSKEY }}

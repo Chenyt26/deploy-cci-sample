@@ -1,17 +1,33 @@
-name: GitHub Actions Demo
-on: [push]
+name: Deploy CCI Actions Demo
+on:
+  push:
+    branches:
+       master-dev
+env:
+  REGION_ID: cn-north-4                  # set this to your preferred huaweicloud region, e.g. cn-north-4
+  ACCESS_KEY_ID: ${{ secrets.ACCESSKEY }}             # set this to your huaweicloud access-key-id
+  ACCESS_KEY_SECRET: ${{ secrets.SECRETACCESSKEY }}               # set this to your huaweicloud access-key-secret
+  SWR_ORGANIZATION:  demo   # SWR 组织名
+  IMAGE_NAME: ccidemo       # 镜像名称
+            
 jobs:
-  Explore-GitHub-Actions:
+  deploy_cci:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      - name: Check out repository code
-        uses: actions/checkout@v2
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      - name: List files in the repository
-        run: |
-          ls ${{ github.workspace }}
-      - run: echo "🍏  This job's status is ${{ job.status }}."
+      - uses: actions/checkout@v2
+
+      - name: Kubectl tool installer
+        id: install-kubectl
+        uses: Azure/setup-kubectl@v2.1
+
+      - name: deploy to cci
+        uses: ./
+        id: deploy-to-cci
+        with:
+          access_key: ${{ secrets.ACCESSKEY }}
+          secret_key: ${{ secrets.SECRETACCESSKEY }}
+          project_id: 0dd8cb413000906a2fcdc019b5a84546
+          region: ${{ env.REGION_ID }}
+          namespace: action-namespace
+          deployment: action-deployment
+          image: swr.cn-north-4.myhuaweicloud.com/hcloudcli/ccidemo:cdb1d2d867b97ea1fae088411bd73e0cc9c1dc52

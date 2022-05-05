@@ -38,12 +38,13 @@ jobs:
           docker build -t $SWR_REGISTRY/$SWR_ORGANIZATION/$IMAGE_NAME:$IMAGE_TAG .
           docker push $SWR_REGISTRY/$SWR_ORGANIZATION/$IMAGE_NAME:$IMAGE_TAG
           echo "::set-output name=image::$SWR_REGISTRY/$SWR_ORGANIZATION/$IMAGE_NAME:$IMAGE_TAG"
+          
       - name: Kubectl tool installer
         id: install-kubectl
         uses: Azure/setup-kubectl@v2.1
 
       - name: deploy to cci
-        uses: ./
+        uses: huaweicloud/deploy-cci-action@v1.0.0
         id: deploy-to-cci
         with:
           access_key: ${{ secrets.ACCESSKEY }}
@@ -52,4 +53,4 @@ jobs:
           region: ${{ env.REGION_ID }}
           namespace: action-namespace
           deployment: action-deployment
-          image: swr.cn-north-4.myhuaweicloud.com/hcloudcli/ccidemo:cdb1d2d867b97ea1fae088411bd73e0cc9c1dc52
+          image: ${{ steps.build-image.outputs.image }}

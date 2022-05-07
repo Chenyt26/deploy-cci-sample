@@ -40,19 +40,19 @@ jobs:
           docker push $SWR_REGISTRY/$SWR_ORGANIZATION/$IMAGE_NAME:$IMAGE_TAG
           echo "::set-output name=image::$SWR_REGISTRY/$SWR_ORGANIZATION/$IMAGE_NAME:$IMAGE_TAG"
           
-#       - name: Kubectl tool installer
-#         id: install-kubectl
-#         uses: Azure/setup-kubectl@v2.1
+      - name: Kubectl tool installer
+        id: install-kubectl
+        uses: Azure/setup-kubectl@v2.1
 
-#       - name: deploy to cci
-#         uses: huaweicloud/deploy-cci-action@v1.0.1
-#         id: deploy-to-cci
-#         with:
-#           access_key: ${{ secrets.ACCESSKEY }}
-#           secret_key: ${{ secrets.SECRETACCESSKEY }}
-#           project_id: ${{env.PROJECT_ID}}
-#           region: ${{ env.REGION_ID }}
-#           namespace: action-namespace
-#           deployment: action-deployment
-#           manifest: './deployment.yaml' 
-#           image: ${{ steps.build-image.outputs.image }}
+      - name: deploy to cci
+        uses: huaweicloud/deploy-cci-action@v1.0.1
+        id: deploy-to-cci
+        with:
+          access_key: ${{ secrets.ACCESSKEY }}
+          secret_key: ${{ secrets.SECRETACCESSKEY }}
+          project_id: ${{env.PROJECT_ID}}
+          region: ${{ env.REGION_ID }}
+          namespace: action-namespace
+          deployment: action-deployment
+          manifest: './deployment.yaml' 
+          image: ${{ steps.build-image.outputs.image }}
